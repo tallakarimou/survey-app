@@ -28,8 +28,8 @@ class SurveyController extends Controller
 
         return SurveyResource::collection(
             Survey::where('user_id', $user->id)
-                ->orderBy('create_at', 'desc')
-                ->paginate(10)
+                ->orderBy('created_at', 'desc')
+                ->paginate(2)
         );
     }
 
@@ -42,6 +42,7 @@ class SurveyController extends Controller
     public function store(SurveyStoreRequest $request)
     {
         $data = $request->validated();
+        
         // check if image was given and save on local system
 
         if (isset($data['image'])) {

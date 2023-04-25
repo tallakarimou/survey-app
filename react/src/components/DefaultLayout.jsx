@@ -5,6 +5,7 @@ import { NavLink, Navigate, Outlet } from 'react-router-dom'
 import { useStateContext } from '../contexts/ContextProvider'
 import { UserIcon } from '@heroicons/react/20/solid'
 import axiosClient from '../axios'
+import { useEffect } from 'react'
 
 
 const navigation = [
@@ -21,21 +22,29 @@ function classNames(...classes) {
 export default function DefaultLayout() {
 
 
-  const { currentUser, userToken, setCurrentUser, setUserToken } = useStateContext();
-  if (!userToken) {
-  return <Navigate to='login'/>
-}
+    const { currentUser, userToken, setCurrentUser, setUserToken } = useStateContext();
+    if (!userToken) {
+        return <Navigate to='login' />
+    }
 
 
-  const  logout = (ev) => {
-    ev.preventDefault();
-    axiosClient.post('/logout')
-      .then(res => {
-        setCurrentUser({})
-        setUserToken(null)
-      });
-}
+    const logout = (ev) => {
+        ev.preventDefault();
+        axiosClient.post('/logout')
+            .then(res => {
+                setCurrentUser({})
+                setUserToken(null)
+            });
+    }
 
+
+    useEffect(
+        () => {
+            axiosClient.get('/me')
+                .then(({ data }) => {
+                    setCurrentUser(data)
+                })
+        }, [])
   return (
     <>
 
