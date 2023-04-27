@@ -103,6 +103,13 @@ export default function QuestionEditor({
       </div>
       {/* description */}
       <br />
+      {JSON.stringify(model)}
+
+      <div>
+        <div>
+          
+        </div>
+      </div>
        </div>
 
 

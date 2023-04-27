@@ -14,6 +14,7 @@ export default function Surveys() {
     const [surveys, setSurveys] = useState([]);
     const [meta, setMeta] = useState({});
     const [loading, setLoading] = useState(false);
+    const {showToast} = useStateContext()
 
     const onDeleteClick = (id) => {
         if (window.confirm("Are you sure you want to delete this survey?")) {
@@ -21,6 +22,7 @@ export default function Surveys() {
                 .then(
                     () => {
                         getSurveys();
+                        showToast('The survey was deleted successfully')
                 }
             )
 
@@ -43,7 +45,7 @@ export default function Surveys() {
 
     useEffect(() => {
         setLoading(true)
-getSurveys()
+        getSurveys()
       }, [])
 
   return (
@@ -59,19 +61,19 @@ getSurveys()
           {loading && <div className="text-center text-lg">
               Loading...
           </div>}
-
-          <div>
-
+          { !loading && <div>
+              {surveys.length === 0 &&
+                  (<div className="py-8 text-center text-gray-700"> you don't have surveys created
+                  </div>)}
               {!loading && <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-
                   {surveys.map(survey => (
                       <SurveyListItem survey={survey} key={survey.id} onDeleteClick={onDeleteClick} />
                   ))
                   }
               </div>}
 
-              <PaginationLinks meta={meta } onPageClick={onPageClick} />
-        </div>
+              {surveys.length > 0 && <PaginationLinks meta={meta} onPageClick={onPageClick} />}
+          </div>}
     </PageComponent>
 
   )

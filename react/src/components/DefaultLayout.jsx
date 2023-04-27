@@ -6,6 +6,7 @@ import { useStateContext } from '../contexts/ContextProvider'
 import { UserIcon } from '@heroicons/react/20/solid'
 import axiosClient from '../axios'
 import { useEffect } from 'react'
+import Toast from './Toast'
 
 
 const navigation = [
@@ -177,8 +178,7 @@ export default function DefaultLayout() {
           )}
         </Disclosure>
           <Outlet/>
-
-
+       <Toast/>
       </div>
     </>
   )

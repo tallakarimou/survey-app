@@ -40,7 +40,7 @@ onPageClick(link)
         </div>
               <div>
 
-         {meta.total>=10 && <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+         {meta.total >meta.per_page && <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
 
      {meta.links?.map((link,ind) => (
 

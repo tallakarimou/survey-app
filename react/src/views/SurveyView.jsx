@@ -6,10 +6,11 @@ import axiosClient from '../axios'
 import { useNavigate, useParams } from "react-router-dom";
 import SurveyQuestions from "../components/SurveyQuestions";
 import { v4 as uuidv4 } from "uuid";
-
+import { useStateContext } from "../contexts/ContextProvider";
 export default function SurveyView() {
 
     const { id } = useParams();
+    const {showToast} = useStateContext()
 
 
   const navigate = useNavigate();
@@ -61,8 +62,16 @@ export default function SurveyView() {
           res = axiosClient.post('/surveys', payload)
       }
       res.then(res => {
-        console.log(res.data)
-        navigate('/surveys')
+        console.log(res.data) 
+          navigate('/surveys')
+          if (id) {
+        showToast('The survey was updated successfully')
+              
+          } else {
+              
+        showToast('The survey was create successfully')
+          }
+
       }).catch((err) =>{
         if (err && err.response) {
           setError(err.response.data.message);
@@ -218,7 +227,7 @@ export default function SurveyView() {
                                       </label>
                                       <p className="text-gray-500">
                                           wether to make survey publicly available
-                                          )              </p>
+                                     </p>
                                   </div>
 
                               </div>
